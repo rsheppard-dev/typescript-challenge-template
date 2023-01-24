@@ -10,7 +10,6 @@ const getValues = (e: Event): void => {
 		'startValue'
 	) as HTMLInputElement;
 	const endValueInput = document.getElementById('endValue') as HTMLInputElement;
-	const errorBox = document.getElementById('error') as HTMLDivElement;
 
 	// get values from inputs and parse to integers
 	const startValue = parseInt(startValueInput.value);
@@ -25,8 +24,7 @@ const getValues = (e: Event): void => {
 		displayNumbers(numbers);
 	} else {
 		// display error on page if invalid input
-		errorBox.innerText = 'You can only enter numbers in the inputs above.';
-		errorBox.classList.remove('d-none');
+		handleError('You can only enter numbers in the inputs above.');
 	}
 };
 
@@ -65,6 +63,22 @@ const displayNumbers = (numbers: number[]): void => {
 
 	// update html in table body
 	tableBody.innerHTML = templateRows;
+};
+
+// function to display and hide error message
+const handleError = (message?: string): void => {
+	// get error box element from html
+	const errorBox = document.getElementById('error') as HTMLDivElement;
+
+	if (message) {
+		// display if message received
+		errorBox.innerText = message;
+		errorBox.classList.remove('d-none');
+	} else if (!errorBox.classList.contains('d-none')) {
+		// else remove error box if one exists
+		errorBox.innerText = '';
+		errorBox.classList.add('d-none');
+	}
 };
 
 // get button element
